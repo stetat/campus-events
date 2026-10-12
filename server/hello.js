@@ -1,8 +1,14 @@
 import { createServer } from 'node:http'
 
 const server = createServer((req, res) => {
-    res.writeHead(200, { 'Content-Type' : 'application/json' });
-    res.end(JSON.stringify({message: 'Hello from node.js', path: req.url}));
+    if (req.url == '/') {
+        res.end(JSON.stringify({ "message": "Welcome to Campus Events" }));
+    } else if (req.url == '/time') {
+        res.end(JSON.stringify({ "now": new Date().toISOString()}));  
+    } else {
+        res.writeHead(404);
+        res.end(JSON.stringify({ "error": "Not found" }));
+    }
 });
 
 server.listen(3000, () => {
